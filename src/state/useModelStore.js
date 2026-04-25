@@ -2,9 +2,13 @@ import { create } from 'zustand'
 
 /**
  * Zustand store for editor state.
- * partColors: { [partId]: "#rrggbb" }
+ * partColors: { [partId or accentSlotId]: "#rrggbb" }
  * textConfigs: { [zoneId]: { text, fontName, size, depth, spacing, align, color, embed } }
  * jerseyStyleId: id of the active jersey style for this model
+ * partSlots: { [partId]: number } — how many connected-component sub-meshes
+ *   each splitColors part rendered into; reported by ModelViewer once the
+ *   STL is loaded and connected-component analysis completes. Drives the
+ *   accent color rows in ColorEditor.
  */
 export const useModelStore = create((set) => ({
   modelId: null,
@@ -12,6 +16,7 @@ export const useModelStore = create((set) => ({
   textConfigs: {},
   exportScale: 1,
   jerseyStyleId: null,
+  partSlots: {},
 
   initFromModel: (model, fonts) => {
     const partColors = {}
@@ -50,6 +55,9 @@ export const useModelStore = create((set) => ({
       textConfigs,
       exportScale: 1,
       jerseyStyleId: activeStyle?.id || null,
+      // Clear old slot counts; they'll get repopulated as PartMesh splits
+      // each part on the new style.
+      partSlots: {},
     })
   },
 
@@ -57,6 +65,12 @@ export const useModelStore = create((set) => ({
     set((state) => ({
       partColors: { ...state.partColors, [partId]: color },
     })),
+
+  setPartSlots: (partId, count) =>
+    set((state) => {
+      if (state.partSlots[partId] === count) return state
+      return { partSlots: { ...state.partSlots, [partId]: count } }
+    }),
 
   setJerseyStyle: (styleId, model) =>
     set((state) => {

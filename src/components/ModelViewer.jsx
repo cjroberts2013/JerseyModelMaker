@@ -7,8 +7,18 @@ import { useModelStore } from '../state/useModelStore.js'
 import { buildTextGeometry, loadFont } from '../lib/textTo3D.js'
 import { buildSurfaceFrame } from '../lib/surfaceFrame.js'
 import { assetUrl } from '../lib/assetUrl.js'
+import { splitConnectedComponents } from '../lib/splitGeometry.js'
+
+/** Slot id for a sub-component of a split part. Index 0 = main body. */
+export function accentSlotId(partId, index) {
+  return index === 0 ? partId : `${partId}-accent${index}`
+}
 
 function PartMesh({ part, onRef, onBounds }) {
+  // When the part is flagged splitColors, fall through to the multi-mesh
+  // renderer that lets each disconnected piece take its own color slot.
+  if (part.splitColors) return <SplitPartMesh part={part} onRef={onRef} onBounds={onBounds} />
+
   const geometry = useLoader(STLLoader, assetUrl(part.file))
   const color = useModelStore((s) => s.partColors[part.id] || part.defaultColor)
   const meshRef = useRef()
@@ -39,6 +49,71 @@ function PartMesh({ part, onRef, onBounds }) {
       castShadow
       receiveShadow
     >
+      <meshStandardMaterial color={color} roughness={0.6} metalness={0.05} />
+    </mesh>
+  )
+}
+
+/**
+ * Loads the STL once, splits it into connected components (largest first),
+ * and renders each as its own mesh. The largest piece reuses the part's
+ * id as its color slot; smaller pieces get `${partId}-accent1`, `-accent2`,
+ * etc. so they each can be colored independently from the sidebar.
+ *
+ * Reports the detected component count up to the store so the ColorEditor
+ * can render a row per detected accent piece.
+ */
+function SplitPartMesh({ part, onRef, onBounds }) {
+  const geometry = useLoader(STLLoader, assetUrl(part.file))
+  const setPartSlots = useModelStore((s) => s.setPartSlots)
+  const position = part.position || [0, 0, 0]
+  const rotation = part.rotation || [0, 0, 0]
+
+  // Split once per loaded geometry. Falls back to [geometry] if there's
+  // only one connected piece anyway.
+  const components = useMemo(() => {
+    if (!geometry) return []
+    const split = splitConnectedComponents(geometry)
+    return split.length ? split : [geometry]
+  }, [geometry])
+
+  // Report bbox of the union (= original geometry bbox) so text anchors keep
+  // resolving correctly, and tell the store how many slots this part now has.
+  useEffect(() => {
+    if (!geometry || !components.length) return
+    geometry.computeBoundingBox()
+    if (onBounds) {
+      const worldBox = geometry.boundingBox.clone()
+      worldBox.min.add(new THREE.Vector3(...position))
+      worldBox.max.add(new THREE.Vector3(...position))
+      onBounds(part.id, worldBox)
+    }
+    setPartSlots(part.id, components.length)
+  }, [part.id, components, geometry, onBounds, position, setPartSlots])
+
+  return (
+    <group name={part.id} position={position} rotation={rotation}>
+      {components.map((geo, i) => (
+        <SubMesh
+          key={i}
+          geometry={geo}
+          slotId={accentSlotId(part.id, i)}
+          fallbackColor={i === 0 ? part.defaultColor : (part.accentColor || '#a5acaf')}
+          onRef={onRef}
+        />
+      ))}
+    </group>
+  )
+}
+
+function SubMesh({ geometry, slotId, fallbackColor, onRef }) {
+  const color = useModelStore((s) => s.partColors[slotId] || fallbackColor)
+  const meshRef = useRef()
+  useEffect(() => {
+    if (meshRef.current && onRef) onRef(slotId, meshRef.current)
+  }, [slotId, onRef])
+  return (
+    <mesh ref={meshRef} geometry={geometry} name={slotId} castShadow receiveShadow>
       <meshStandardMaterial color={color} roughness={0.6} metalness={0.05} />
     </mesh>
   )
