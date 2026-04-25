@@ -141,18 +141,8 @@ export default function TextEditor({ model, fonts }) {
         onChange={(v) => setTextField(activeZoneId, 'offsetY', v)}
       />
 
-      <div>
-        <label className="block text-xs uppercase text-slate-400 mb-2">Text Color</label>
-        <div className="flex items-center gap-2">
-          <input
-            type="color"
-            value={cfg.color}
-            onChange={(e) => setTextField(activeZoneId, 'color', e.target.value)}
-            className="w-10 h-10 rounded border border-slate-700 bg-slate-900"
-          />
-          <span className="text-xs font-mono text-slate-400">{cfg.color}</span>
-        </div>
-      </div>
+      {/* Text color is now a single global setting in the Global Colors
+          panel below ("Applies to all texts"). */}
     </div>
   )
 }

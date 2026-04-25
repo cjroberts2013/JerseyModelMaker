@@ -1,13 +1,18 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useLoader, useThree, useFrame } from '@react-three/fiber'
 import { OrbitControls, GizmoHelper, GizmoViewport } from '@react-three/drei'
-import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js'
 import * as THREE from 'three'
 import { useModelStore } from '../state/useModelStore.js'
 import { buildTextGeometry, loadFont } from '../lib/textTo3D.js'
 import { buildSurfaceFrame } from '../lib/surfaceFrame.js'
 import { assetUrl } from '../lib/assetUrl.js'
 import { splitConnectedComponents } from '../lib/splitGeometry.js'
+import { HybridLoaderClass } from '../lib/loadGeometry.js'
+import {
+  extractColorPalette,
+  snapshotOriginalColors,
+  applyPaletteToGeometry,
+} from '../lib/vertexColors.js'
 
 /** Slot id for a sub-component of a split part. Index 0 = main body. */
 export function accentSlotId(partId, index) {
@@ -17,13 +22,37 @@ export function accentSlotId(partId, index) {
 function PartMesh({ part, onRef, onBounds }) {
   // When the part is flagged splitColors, fall through to the multi-mesh
   // renderer that lets each disconnected piece take its own color slot.
+  // (Legacy STL-only multi-piece path; FBX/GLB with vertex colors uses the
+  // palette path below instead.)
   if (part.splitColors) return <SplitPartMesh part={part} onRef={onRef} onBounds={onBounds} />
 
-  const geometry = useLoader(STLLoader, assetUrl(part.file))
-  const color = useModelStore((s) => s.partColors[part.id] || part.defaultColor)
+  const geometry = useLoader(HybridLoaderClass, assetUrl(part.file))
+  const setColorPalette = useModelStore((s) => s.setColorPalette)
+  const palette = useModelStore((s) => s.colorPalettes[part.id])
+  const partColor = useModelStore((s) => s.partColors[part.id] || part.defaultColor)
   const meshRef = useRef()
   const position = part.position || [0, 0, 0]
   const rotation = part.rotation || [0, 0, 0]
+
+  // Extract the palette once per loaded geometry. If the geometry has
+  // vertex colors (FBX/GLB), this returns the painted accent regions; if
+  // not (plain STL), returns null and we fall back to single-color mode.
+  useEffect(() => {
+    if (!geometry) return
+    const detected = extractColorPalette(geometry)
+    if (detected && detected.length) {
+      snapshotOriginalColors(geometry)
+      setColorPalette(part.id, detected)
+    } else {
+      setColorPalette(part.id, [])
+    }
+  }, [part.id, geometry, setColorPalette])
+
+  // Reapply palette to the GL buffer whenever the user picks a new color.
+  useEffect(() => {
+    if (!geometry || !palette?.length) return
+    applyPaletteToGeometry(geometry, palette)
+  }, [geometry, palette])
 
   useEffect(() => {
     if (!geometry) return
@@ -39,6 +68,8 @@ function PartMesh({ part, onRef, onBounds }) {
     if (meshRef.current && onRef) onRef(part.id, meshRef.current)
   }, [part.id, onRef, onBounds, geometry, position])
 
+  const usePalette = !!(palette && palette.length)
+
   return (
     <mesh
       ref={meshRef}
@@ -49,7 +80,15 @@ function PartMesh({ part, onRef, onBounds }) {
       castShadow
       receiveShadow
     >
-      <meshStandardMaterial color={color} roughness={0.6} metalness={0.05} />
+      {/* When the geometry has a vertex-color palette, drive shading from
+       *  the per-vertex color buffer; otherwise tint with a single color
+       *  from partColors. */}
+      <meshStandardMaterial
+        color={usePalette ? '#ffffff' : partColor}
+        vertexColors={usePalette}
+        roughness={0.6}
+        metalness={0.05}
+      />
     </mesh>
   )
 }
@@ -64,7 +103,7 @@ function PartMesh({ part, onRef, onBounds }) {
  * can render a row per detected accent piece.
  */
 function SplitPartMesh({ part, onRef, onBounds }) {
-  const geometry = useLoader(STLLoader, assetUrl(part.file))
+  const geometry = useLoader(HybridLoaderClass, assetUrl(part.file))
   const setPartSlots = useModelStore((s) => s.setPartSlots)
   const position = part.position || [0, 0, 0]
   const rotation = part.rotation || [0, 0, 0]
@@ -131,6 +170,7 @@ function SubMesh({ geometry, slotId, fallbackColor, onRef }) {
  */
 function TextMesh({ zone, fonts, onRef, partBounds }) {
   const config = useModelStore((s) => s.textConfigs[zone.id])
+  const globalTextColor = useModelStore((s) => s.globalTextColor)
   const [geometry, setGeometry] = useState(null)
   const meshRef = useRef()
 
@@ -200,7 +240,7 @@ function TextMesh({ zone, fonts, onRef, partBounds }) {
         matrixAutoUpdate={false}
         name={`text-${zone.id}`}
       >
-        <meshStandardMaterial color={config?.color || '#000'} roughness={0.6} metalness={0.05} />
+        <meshStandardMaterial color={globalTextColor || config?.color || '#000'} roughness={0.6} metalness={0.05} />
       </mesh>
     )
   }

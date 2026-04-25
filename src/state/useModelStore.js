@@ -2,17 +2,32 @@ import { create } from 'zustand'
 
 /**
  * Zustand store for editor state.
+ *
  * partColors: { [partId or accentSlotId]: "#rrggbb" }
+ *   Single-material color per part (legacy / STL fallback path).
+ *
+ * colorPalettes: { [partId]: [{ originalColor, currentColor, vertexCount }] }
+ *   Vertex-color palette extracted from FBX/GLB models with painted accents.
+ *   When present, ModelViewer renders that part with vertexColors:true and
+ *   ColorEditor surfaces one swatch per palette entry. Initialized by
+ *   setColorPalette() once the geometry has loaded; mutated by
+ *   setPaletteColor() when the user picks a swatch.
+ *
+ * globalTextColor: "#rrggbb" or null
+ *   Single color applied to every text zone (matches PressPrint's "Text
+ *   Color — Applies to all texts" UI). When null each zone keeps its
+ *   per-zone color from textConfigs.
+ *
  * textConfigs: { [zoneId]: { text, fontName, size, depth, spacing, align, color, embed } }
  * jerseyStyleId: id of the active jersey style for this model
- * partSlots: { [partId]: number } — how many connected-component sub-meshes
- *   each splitColors part rendered into; reported by ModelViewer once the
- *   STL is loaded and connected-component analysis completes. Drives the
- *   accent color rows in ColorEditor.
+ * partSlots: { [partId]: number } — connected-component sub-mesh count for
+ *   splitColors parts (legacy STL multi-piece path).
  */
 export const useModelStore = create((set) => ({
   modelId: null,
   partColors: {},
+  colorPalettes: {},
+  globalTextColor: null,
   textConfigs: {},
   exportScale: 1,
   jerseyStyleId: null,
@@ -58,6 +73,10 @@ export const useModelStore = create((set) => ({
       // Clear old slot counts; they'll get repopulated as PartMesh splits
       // each part on the new style.
       partSlots: {},
+      // Reset palettes; PartMesh will populate them as it extracts colors
+      // from each newly loaded geometry.
+      colorPalettes: {},
+      globalTextColor: null,
     })
   },
 
@@ -71,6 +90,41 @@ export const useModelStore = create((set) => ({
       if (state.partSlots[partId] === count) return state
       return { partSlots: { ...state.partSlots, [partId]: count } }
     }),
+
+  /** Initialize a part's vertex-color palette (called by PartMesh once the
+   *  geometry has loaded and we've scanned it). Each entry is
+   *  `{ originalColor, currentColor, vertexCount, _linearOriginal }`. */
+  setColorPalette: (partId, palette) =>
+    set((state) => {
+      // No-op if the same palette is already in place — saves rerenders
+      // when geometries reload.
+      const existing = state.colorPalettes[partId]
+      if (existing && existing.length === palette.length) {
+        const same = existing.every(
+          (e, i) =>
+            e.originalColor === palette[i].originalColor &&
+            e.currentColor === palette[i].currentColor,
+        )
+        if (same) return state
+      }
+      return { colorPalettes: { ...state.colorPalettes, [partId]: palette } }
+    }),
+
+  /** User picked a new color for one swatch in a part's palette. Updates
+   *  the entry's `currentColor`; the viewer side reads the palette and
+   *  reapplies it to the GL buffer. */
+  setPaletteColor: (partId, index, color) =>
+    set((state) => {
+      const palette = state.colorPalettes[partId]
+      if (!palette || !palette[index]) return state
+      const next = palette.map((e, i) =>
+        i === index ? { ...e, currentColor: color } : e,
+      )
+      return { colorPalettes: { ...state.colorPalettes, [partId]: next } }
+    }),
+
+  /** Single text color applied to all text zones; null clears the override. */
+  setGlobalTextColor: (color) => set({ globalTextColor: color }),
 
   setJerseyStyle: (styleId, model) =>
     set((state) => {
