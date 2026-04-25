@@ -1,0 +1,293 @@
+{
+  "_note": "Fonts moved to /public/fonts.json. Each text zone's defaultFont now references a font by `name` from that catalog.",
+  "templates": [
+    {
+      "id": "nfl-jersey",
+      "parts": [
+        {
+          "id": "frame",
+          "name": "Frame",
+          "file": "/models/nfl-jersey-base/frame.stl",
+          "defaultColor": "#0a0a0a",
+          "exportGroup": "withoutText",
+          "exportFilename": "black frame.stl"
+        },
+        {
+          "id": "matte",
+          "name": "Background",
+          "file": "/models/nfl-jersey-base/matte.stl",
+          "defaultColor": "#e8e8e8",
+          "exportGroup": "withText",
+          "exportFilename": "NFLbackground_with_text_{teamName}_{fullName}.stl",
+          "_comment": "V2 matte uses origin-at-corner coords. Y offset is -matte.dy/2 + innerMatte.centerY (=2.50) so matte and inner matte share a Y-center and the visible border is symmetric. Z places the matte back flush with the inner-matte back (-4.6); front face lands at z=-2.6 per the surface quads below.",
+          "position": [-57.86, -86.29, -4.6]
+        },
+        {
+          "id": "jersey",
+          "name": "Jersey",
+          "file": "/models/nfl-jersey-base/jersey.stl",
+          "defaultColor": "#1e40af",
+          "exportGroup": "withText",
+          "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl"
+        },
+        {
+          "id": "background",
+          "name": "Inner Matte",
+          "file": "/models/nfl-jersey-base/background.stl",
+          "defaultColor": "#f5f5f5",
+          "exportGroup": "withoutText",
+          "exportFilename": "white frame.stl"
+        },
+        {
+          "id": "stand",
+          "name": "Stand",
+          "file": "/models/nfl-jersey-base/stand.stl",
+          "defaultColor": "#cccccc",
+          "exportGroup": "stl",
+          "exportFilename": "x 4.stl"
+        }
+      ],
+      "textZones": [
+        {
+          "id": "teamName",
+          "label": "TEAM NAME",
+          "defaultText": "TEAM\nNAME",
+          "defaultFont": "Arial Black",
+          "defaultSize": 13,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -0.4,
+          "defaultLineSpacing": -3.5,
+          "defaultAlign": "center",
+          "defaultColor": "#1a1a1a",
+          "defaultEmbed": 0.4,
+          "onPart": "matte",
+          "surface": {
+            "point1": [-50, 85.5, -2.6],
+            "point2": [50, 85.5, -2.6],
+            "point3": [50, 54.5, -2.6],
+            "point4": [-50, 54.5, -2.6]
+          }
+        },
+        {
+          "id": "playerName",
+          "label": "PLAYER NAME",
+          "defaultText": "NAME",
+          "defaultFont": "College",
+          "defaultSize": 12,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultAlign": "center",
+          "defaultColor": "#f5f5f5",
+          "defaultEmbed": 0.8,
+          "onPart": "jersey",
+          "surface": {
+            "point1": [-28, 38, 0.6],
+            "point2": [28, 38, 0.6],
+            "point3": [28, 28, 0.6],
+            "point4": [-28, 28, 0.6]
+          }
+        },
+        {
+          "id": "playerNumber",
+          "label": "PLAYER NUMBER",
+          "defaultText": "00",
+          "defaultFont": "College Bold",
+          "defaultSize": 48.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -1.1,
+          "defaultAlign": "center",
+          "defaultColor": "#a0a0a0",
+          "defaultEmbed": 0.8,
+          "onPart": "jersey",
+          "surface": {
+            "point1": [-36, 25.5, 0.6],
+            "point2": [36, 25.5, 0.6],
+            "point3": [36, -14.5, 0.6],
+            "point4": [-36, -14.5, 0.6]
+          }
+        },
+        {
+          "id": "fullName",
+          "label": "YOUR FULL NAME",
+          "defaultText": "Your\nName",
+          "defaultFont": "Arial Black",
+          "defaultSize": 9,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultAlign": "left",
+          "defaultColor": "#111111",
+          "defaultEmbed": 0.4,
+          "onPart": "matte",
+          "surface": {
+            "point1": [-55.5, -61.5, -2.6],
+            "point2": [-10.5, -61.5, -2.6],
+            "point3": [-10.5, -83.5, -2.6],
+            "point4": [-55.5, -83.5, -2.6]
+          }
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "giants-jersey",
+      "name": "New York Giants Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#1e40af", "accent": "#c8102e" },
+      "textOverrides": {
+        "teamName": { "defaultText": "NEW YORK\nGIANTS", "defaultColor": "#d0d0d0" },
+        "playerName": { "defaultText": "NABERS" },
+        "playerNumber": { "defaultText": "1" }
+      },
+      "colorOverrides": {
+        "jersey": "#1e40af"
+      }
+    },
+    {
+      "id": "steelers",
+      "name": "Pittsburgh Steelers Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#000000", "accent": "#ffb612" },
+      "textOverrides": {
+        "teamName": { "defaultText": "PITTSBURGH\nSTEELERS", "defaultColor": "#ffb612" },
+        "playerName": { "defaultText": "HARRIS", "defaultColor": "#ffb612" },
+        "playerNumber": { "defaultText": "22", "defaultColor": "#ffb612" }
+      },
+      "colorOverrides": {
+        "jersey": "#000000"
+      }
+    },
+    {
+      "id": "raiders",
+      "name": "Las Vegas Raiders Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#0a0a0a", "accent": "#a5acaf" },
+      "textOverrides": {
+        "teamName": { "defaultText": "LAS VEGAS\nRAIDERS", "defaultColor": "#d0d0d0" },
+        "playerName": { "defaultText": "ADAMS", "defaultColor": "#f5f5f5" },
+        "playerNumber": { "defaultText": "17", "defaultColor": "#f5f5f5" }
+      },
+      "colorOverrides": {
+        "jersey": "#0a0a0a"
+      }
+    },
+    {
+      "id": "seahawks",
+      "name": "Seattle Seahawks Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#1e3a5f", "accent": "#69be28" },
+      "textOverrides": {
+        "teamName": { "defaultText": "SEATTLE\nSEAHAWKS", "defaultColor": "#69be28" },
+        "playerName": { "defaultText": "METCALF", "defaultColor": "#f5f5f5" },
+        "playerNumber": { "defaultText": "14", "defaultColor": "#f5f5f5" }
+      },
+      "colorOverrides": {
+        "jersey": "#1e3a5f"
+      }
+    },
+    {
+      "id": "patriots",
+      "name": "New England Patriots Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#002a5c", "accent": "#c8102e" },
+      "textOverrides": {
+        "teamName": { "defaultText": "NEW ENGLAND\nPATRIOTS", "defaultColor": "#c8102e" },
+        "playerName": { "defaultText": "MAYE", "defaultColor": "#f5f5f5" },
+        "playerNumber": { "defaultText": "10", "defaultColor": "#f5f5f5" }
+      },
+      "colorOverrides": {
+        "jersey": "#002a5c"
+      }
+    },
+    {
+      "id": "eagles",
+      "name": "Philadelphia Eagles Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#004c54", "accent": "#a5acaf" },
+      "textOverrides": {
+        "teamName": { "defaultText": "PHILADELPHIA\nEAGLES", "defaultColor": "#a5acaf" },
+        "playerName": { "defaultText": "HURTS", "defaultColor": "#f5f5f5" },
+        "playerNumber": { "defaultText": "1", "defaultColor": "#f5f5f5" }
+      },
+      "colorOverrides": {
+        "jersey": "#004c54"
+      }
+    },
+    {
+      "id": "49ers",
+      "name": "San Francisco 49ers Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#aa0000", "accent": "#b3995d" },
+      "textOverrides": {
+        "teamName": { "defaultText": "SAN FRANCISCO\n49ERS", "defaultColor": "#b3995d" },
+        "playerName": { "defaultText": "PURDY", "defaultColor": "#b3995d" },
+        "playerNumber": { "defaultText": "13", "defaultColor": "#b3995d" }
+      },
+      "colorOverrides": {
+        "jersey": "#aa0000"
+      }
+    },
+    {
+      "id": "bears",
+      "name": "Chicago Bears Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#0b162a", "accent": "#c83803" },
+      "textOverrides": {
+        "teamName": { "defaultText": "CHICAGO\nBEARS", "defaultColor": "#c83803" },
+        "playerName": { "defaultText": "WILLIAMS", "defaultColor": "#c83803" },
+        "playerNumber": { "defaultText": "18", "defaultColor": "#c83803" }
+      },
+      "colorOverrides": {
+        "jersey": "#0b162a"
+      }
+    },
+    {
+      "id": "chiefs",
+      "name": "Kansas City Chiefs Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#e31837", "accent": "#ffb81c" },
+      "textOverrides": {
+        "teamName": { "defaultText": "KANSAS CITY\nCHIEFS", "defaultColor": "#ffb81c" },
+        "playerName": { "defaultText": "MAHOMES", "defaultColor": "#f5f5f5" },
+        "playerNumber": { "defaultText": "15", "defaultColor": "#f5f5f5" }
+      },
+      "colorOverrides": {
+        "jersey": "#e31837"
+      }
+    },
+    {
+      "id": "packers",
+      "name": "Green Bay Packers Jersey",
+      "template": "nfl-jersey",
+      "category": "NFL",
+      "subtitle": "Custom 3D printed design",
+      "thumb": { "jersey": "#203731", "accent": "#ffb612" },
+      "textOverrides": {
+        "teamName": { "defaultText": "GREEN BAY\nPACKERS", "defaultColor": "#ffb612" },
+        "playerName": { "defaultText": "LOVE", "defaultColor": "#ffb612" },
+        "playerNumber": { "defaultText": "10", "defaultColor": "#ffb612" }
+      },
+      "colorOverrides": {
+        "jersey": "#203731"
+      }
+    }
+  ]
+}

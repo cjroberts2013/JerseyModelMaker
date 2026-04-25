@@ -1,0 +1,16 @@
+{
+  "_note": "Font catalog for ModelMaker. Engine uses opentype.js (TTFs), not typeface.json — opentype.js has a richer glyph set and works with any TTF. Free Google-Fonts substitutes are used for non-free fonts (Helvetica → Inter, Impact → Anton, Arial Black → Archivo Black).",
+  "fonts": [
+    { "name": "Helvetica",     "displayName": "Helvetica",     "url": "/fonts/Inter-Bold.ttf" },
+    { "name": "Impact",        "displayName": "Impact",        "url": "/fonts/Anton-Regular.ttf" },
+    { "name": "College",       "displayName": "College",       "url": "/fonts/College-Regular.ttf" },
+    { "name": "College Bold",  "displayName": "College Bold",  "url": "/fonts/College-Bold.ttf" },
+    { "name": "College Block", "displayName": "College Block", "url": "/fonts/Bungee-Regular.ttf" },
+    { "name": "Arial Black",   "displayName": "Arial Black",   "url": "/fonts/ArchivoBlack-Regular.ttf" },
+    { "name": "Roboto",        "displayName": "Roboto",        "url": "/fonts/Roboto-Bold.ttf" },
+    { "name": "Oswald",        "displayName": "Oswald",        "url": "/fonts/Oswald-Bold.ttf" },
+    { "name": "DM Sans",       "displayName": "DM Sans",       "url": "/fonts/DMSans-Bold.ttf" },
+    { "name": "Quicksand",     "displayName": "Quicksand",     "url": "/fonts/Quicksand-Bold.ttf" },
+    { "name": "Cinzel",        "displayName": "Cinzel",        "url": "/fonts/Cinzel-Bold.ttf" }
+  ]
+}
