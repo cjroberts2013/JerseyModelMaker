@@ -23,14 +23,6 @@
           "position": [-57.86, -86.29, -4.6]
         },
         {
-          "id": "jersey",
-          "name": "Jersey",
-          "file": "/models/nfl-jersey-base/jersey.stl",
-          "defaultColor": "#1e40af",
-          "exportGroup": "withText",
-          "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl"
-        },
-        {
           "id": "background",
           "name": "Inner Matte",
           "file": "/models/nfl-jersey-base/background.stl",
@@ -45,6 +37,50 @@
           "defaultColor": "#cccccc",
           "exportGroup": "stl",
           "exportFilename": "x 4.stl"
+        }
+      ],
+      "jerseyStyles": [
+        {
+          "id": "classic",
+          "name": "Classic",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/nfl-jersey-base/jersey.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        },
+        {
+          "id": "style1",
+          "name": "Style 1",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_1.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        },
+        {
+          "id": "style2",
+          "name": "Style 2",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_2.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        },
+        {
+          "id": "style3",
+          "name": "Style 3",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_3.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        },
+        {
+          "id": "style4",
+          "name": "Style 4",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_4.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        },
+        {
+          "id": "style5",
+          "name": "Style 5",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_5.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
         }
       ],
       "textZones": [
@@ -135,6 +171,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
       "thumb": { "jersey": "#1e40af", "accent": "#c8102e" },
       "textOverrides": {
         "teamName": { "defaultText": "NEW YORK\nGIANTS", "defaultColor": "#d0d0d0" },
@@ -151,6 +188,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style1",
       "thumb": { "jersey": "#000000", "accent": "#ffb612" },
       "textOverrides": {
         "teamName": { "defaultText": "PITTSBURGH\nSTEELERS", "defaultColor": "#ffb612" },
@@ -167,6 +205,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style2",
       "thumb": { "jersey": "#0a0a0a", "accent": "#a5acaf" },
       "textOverrides": {
         "teamName": { "defaultText": "LAS VEGAS\nRAIDERS", "defaultColor": "#d0d0d0" },
@@ -183,6 +222,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style3",
       "thumb": { "jersey": "#1e3a5f", "accent": "#69be28" },
       "textOverrides": {
         "teamName": { "defaultText": "SEATTLE\nSEAHAWKS", "defaultColor": "#69be28" },
@@ -199,6 +239,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style4",
       "thumb": { "jersey": "#002a5c", "accent": "#c8102e" },
       "textOverrides": {
         "teamName": { "defaultText": "NEW ENGLAND\nPATRIOTS", "defaultColor": "#c8102e" },
@@ -215,6 +256,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style5",
       "thumb": { "jersey": "#004c54", "accent": "#a5acaf" },
       "textOverrides": {
         "teamName": { "defaultText": "PHILADELPHIA\nEAGLES", "defaultColor": "#a5acaf" },
@@ -231,6 +273,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style1",
       "thumb": { "jersey": "#aa0000", "accent": "#b3995d" },
       "textOverrides": {
         "teamName": { "defaultText": "SAN FRANCISCO\n49ERS", "defaultColor": "#b3995d" },
@@ -247,6 +290,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style2",
       "thumb": { "jersey": "#0b162a", "accent": "#c83803" },
       "textOverrides": {
         "teamName": { "defaultText": "CHICAGO\nBEARS", "defaultColor": "#c83803" },
@@ -263,6 +307,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style3",
       "thumb": { "jersey": "#e31837", "accent": "#ffb81c" },
       "textOverrides": {
         "teamName": { "defaultText": "KANSAS CITY\nCHIEFS", "defaultColor": "#ffb81c" },
@@ -279,6 +324,7 @@
       "template": "nfl-jersey",
       "category": "NFL",
       "subtitle": "Custom 3D printed design",
+      "defaultStyle": "style4",
       "thumb": { "jersey": "#203731", "accent": "#ffb612" },
       "textOverrides": {
         "teamName": { "defaultText": "GREEN BAY\nPACKERS", "defaultColor": "#ffb612" },

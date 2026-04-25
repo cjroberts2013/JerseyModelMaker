@@ -7,6 +7,7 @@ import { loadAllFonts } from '../lib/fontLoader.js'
 import ModelViewer from './ModelViewer.jsx'
 import TextEditor from './TextEditor.jsx'
 import ColorEditor from './ColorEditor.jsx'
+import JerseyStyleEditor from './JerseyStyleEditor.jsx'
 import ExportPanel from './ExportPanel.jsx'
 import ExportDialog from './ExportDialog.jsx'
 
@@ -14,8 +15,23 @@ export default function Editor() {
   const { modelId } = useParams()
   const navigate = useNavigate()
   const entry = data.models.find((m) => m.id === modelId)
-  const model = useMemo(() => resolveModel(entry, data.templates), [entry])
+  const baseModel = useMemo(() => resolveModel(entry, data.templates), [entry])
   const initFromModel = useModelStore((s) => s.initFromModel)
+  const jerseyStyleId = useModelStore((s) => s.jerseyStyleId)
+
+  // Merge the active jersey-style's parts into the model's parts list so
+  // every downstream component (ModelViewer, ColorEditor, ExportDialog)
+  // just sees a flat array. The base parts come first; style parts last.
+  const model = useMemo(() => {
+    if (!baseModel) return null
+    const styles = baseModel.jerseyStyles || []
+    const activeStyle =
+      styles.find((s) => s.id === jerseyStyleId) ||
+      styles.find((s) => s.id === baseModel.defaultStyleId) ||
+      styles[0]
+    const styleParts = activeStyle?.parts || []
+    return { ...baseModel, parts: [...baseModel.parts, ...styleParts] }
+  }, [baseModel, jerseyStyleId])
   const sceneRef = useRef(null)
   const [downloadOpen, setDownloadOpen] = useState(false)
   const [fonts, setFonts] = useState([])
@@ -29,9 +45,12 @@ export default function Editor() {
     return () => { cancelled = true }
   }, [])
 
+  // Init store ONCE per model id (not on every style switch — that would
+  // wipe the user's text/color edits). setJerseyStyle handles per-style
+  // bookkeeping like seeding new part-color slots.
   useEffect(() => {
-    if (model && fonts.length) initFromModel(model, fonts)
-  }, [model, fonts, initFromModel])
+    if (baseModel && fonts.length) initFromModel(baseModel, fonts)
+  }, [baseModel, fonts, initFromModel])
 
   if (!model) {
     return (
@@ -57,6 +76,7 @@ export default function Editor() {
           </button>
           <div className="text-xs text-slate-500">{model.name}</div>
         </div>
+        <JerseyStyleEditor model={model} />
         <TextEditor model={model} fonts={fonts} />
         <ColorEditor model={model} />
       </aside>

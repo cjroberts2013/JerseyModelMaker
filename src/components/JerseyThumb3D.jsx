@@ -8,11 +8,25 @@ import { renderJerseyThumb } from '../lib/thumbRenderer.js'
  * team's overrides, captures a PNG, and shows it via <img>. Avoids per-card
  * WebGL contexts (browsers cap them around 8-16) and lets us scale to many
  * tiles.
+ *
+ * The team's `defaultStyle` selects which jersey-shape STL is used; this is
+ * what makes the gallery showcase the available styles across the cards.
  */
 const TEMPLATE = data.templates[0]
-const PARTS = TEMPLATE.parts
+const BASE_PARTS = TEMPLATE.parts
+const STYLES = TEMPLATE.jerseyStyles || []
 
-export default function JerseyThumb3D({ colorOverrides = {}, textOverrides = {}, fontCatalog }) {
+function pickStyleParts(defaultStyle) {
+  const style = STYLES.find((s) => s.id === defaultStyle) || STYLES[0]
+  return style?.parts || []
+}
+
+export default function JerseyThumb3D({
+  colorOverrides = {},
+  textOverrides = {},
+  fontCatalog,
+  defaultStyle,
+}) {
   const [src, setSrc] = useState(null)
 
   useEffect(() => {
@@ -20,8 +34,9 @@ export default function JerseyThumb3D({ colorOverrides = {}, textOverrides = {},
     let cancelled = false
 
     const textZones = TEMPLATE.textZones.map((z) => ({ ...z, ...(textOverrides[z.id] || {}) }))
+    const parts = [...BASE_PARTS, ...pickStyleParts(defaultStyle)]
 
-    renderJerseyThumb(PARTS, colorOverrides, textZones, fontCatalog)
+    renderJerseyThumb(parts, colorOverrides, textZones, fontCatalog)
       .then((url) => {
         if (!cancelled) setSrc(url)
       })
@@ -32,7 +47,7 @@ export default function JerseyThumb3D({ colorOverrides = {}, textOverrides = {},
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(colorOverrides), JSON.stringify(textOverrides), !!fontCatalog])
+  }, [JSON.stringify(colorOverrides), JSON.stringify(textOverrides), defaultStyle, !!fontCatalog])
 
   return (
     <div className="w-full h-full flex items-center justify-center">

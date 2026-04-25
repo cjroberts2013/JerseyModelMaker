@@ -43,6 +43,7 @@ export default function ModelGallery() {
                 <JerseyThumb3D
                   colorOverrides={m.colorOverrides || {}}
                   textOverrides={m.textOverrides || {}}
+                  defaultStyle={m.defaultStyle}
                   fontCatalog={fontCatalog}
                 />
               </div>
