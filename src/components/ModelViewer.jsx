@@ -35,16 +35,16 @@ function PartMesh({ part, onRef, onBounds }) {
   const rotation = part.rotation || [0, 0, 0]
 
   // Extract the palette once per loaded geometry. If the geometry has
-  // vertex colors (FBX/GLB), this returns the painted accent regions; if
-  // not (plain STL), returns null and we fall back to single-color mode.
+  // vertex colors (FBX/GLB), this returns the painted accent regions and
+  // we overwrite any configured palette with the extracted one. If not
+  // (plain STL), we leave whatever was seeded by initFromModel intact so
+  // the configured swatches stay visible in the UI.
   useEffect(() => {
     if (!geometry) return
     const detected = extractColorPalette(geometry)
     if (detected && detected.length) {
       snapshotOriginalColors(geometry)
       setColorPalette(part.id, detected)
-    } else {
-      setColorPalette(part.id, [])
     }
   }, [part.id, geometry, setColorPalette])
 
@@ -68,7 +68,14 @@ function PartMesh({ part, onRef, onBounds }) {
     if (meshRef.current && onRef) onRef(part.id, meshRef.current)
   }, [part.id, onRef, onBounds, geometry, position])
 
-  const usePalette = !!(palette && palette.length)
+  // Geometry has real vertex colors when extractColorPalette saved an
+  // _originalColors snapshot (we only snapshot when a real color buffer is
+  // present). A configured palette without that snapshot means we render
+  // single-color and use the first swatch's currentColor as the tint.
+  const hasVertexColorBuffer = !!geometry?.userData?._originalColors
+  const usePalette = !!(palette && palette.length && hasVertexColorBuffer)
+  const singleColor =
+    palette && palette.length ? palette[0].currentColor : partColor
 
   return (
     <mesh
@@ -80,11 +87,12 @@ function PartMesh({ part, onRef, onBounds }) {
       castShadow
       receiveShadow
     >
-      {/* When the geometry has a vertex-color palette, drive shading from
-       *  the per-vertex color buffer; otherwise tint with a single color
-       *  from partColors. */}
+      {/* When the geometry has a real vertex-color buffer, drive shading
+       *  from per-vertex color (white tint, vertexColors:true). Otherwise
+       *  tint with a single material color — the first palette swatch if
+       *  one's configured, else the legacy partColor. */}
       <meshStandardMaterial
-        color={usePalette ? '#ffffff' : partColor}
+        color={usePalette ? '#ffffff' : singleColor}
         vertexColors={usePalette}
         roughness={0.6}
         metalness={0.05}

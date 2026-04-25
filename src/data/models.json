@@ -6,7 +6,7 @@
       "parts": [
         {
           "id": "frame",
-          "name": "Frame",
+          "name": "Outer Frame",
           "file": "/models/nfl-jersey-base/frame.stl",
           "defaultColor": "#0a0a0a",
           "exportGroup": "withoutText",
@@ -14,7 +14,7 @@
         },
         {
           "id": "matte",
-          "name": "Background",
+          "name": "Team Background",
           "file": "/models/nfl-jersey-base/matte.stl",
           "defaultColor": "#e8e8e8",
           "exportGroup": "withText",
@@ -24,7 +24,7 @@
         },
         {
           "id": "background",
-          "name": "Inner Matte",
+          "name": "Inner Frame",
           "file": "/models/nfl-jersey-base/background.stl",
           "defaultColor": "#f5f5f5",
           "exportGroup": "withoutText",
@@ -44,42 +44,84 @@
           "id": "classic",
           "name": "Classic",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/nfl-jersey-base/jersey.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/nfl-jersey-base/jersey.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         },
         {
           "id": "style1",
           "name": "Style 1",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_1.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_1.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         },
         {
           "id": "style2",
           "name": "Style 2",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_2.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_2.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         },
         {
           "id": "style3",
           "name": "Style 3",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_3.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_3.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         },
         {
           "id": "style4",
           "name": "Style 4",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_4.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_4.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         },
         {
           "id": "style5",
           "name": "Style 5",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_5.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_5.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
+              "palette": [
+                { "name": "Body", "defaultColor": "#1e40af" },
+                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
+                { "name": "Collar", "defaultColor": "#a5acaf" },
+                { "name": "Trim", "defaultColor": "#ffffff" }
+              ]
+            }
           ]
         }
       ],

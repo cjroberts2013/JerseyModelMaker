@@ -35,16 +35,34 @@ export const useModelStore = create((set) => ({
 
   initFromModel: (model, fonts) => {
     const partColors = {}
-    // Seed colors from base parts first, then from the active style's parts.
-    model.parts.forEach((p) => {
+    const colorPalettes = {}
+    // Seed colors and (optional) configured palettes from base parts first,
+    // then from the active style's parts.
+    const seedPart = (p) => {
       partColors[p.id] = p.defaultColor
-    })
+      if (Array.isArray(p.palette) && p.palette.length) {
+        colorPalettes[p.id] = p.palette.map((entry, i) => {
+          // The first palette entry is the part's primary color — let
+          // team-level colorOverrides (already merged into p.defaultColor
+          // by resolveModel) win so per-team palettes look right.
+          const color = i === 0 ? p.defaultColor : entry.defaultColor
+          return {
+            name: entry.name,
+            originalColor: color,
+            currentColor: color,
+            // No vertex-count / linear-original — those are populated only
+            // when a real vertex-color buffer is present and
+            // extractColorPalette runs.
+            fromConfig: true,
+          }
+        })
+      }
+    }
+    model.parts.forEach(seedPart)
     const activeStyle =
       model.jerseyStyles?.find((s) => s.id === model.defaultStyleId) ||
       model.jerseyStyles?.[0]
-    activeStyle?.parts?.forEach((p) => {
-      partColors[p.id] = p.defaultColor
-    })
+    activeStyle?.parts?.forEach(seedPart)
     const textConfigs = {}
     model.textZones.forEach((z) => {
       // fontName matches a `name` in /fonts.json; fall back to the first font.
@@ -73,9 +91,10 @@ export const useModelStore = create((set) => ({
       // Clear old slot counts; they'll get repopulated as PartMesh splits
       // each part on the new style.
       partSlots: {},
-      // Reset palettes; PartMesh will populate them as it extracts colors
-      // from each newly loaded geometry.
-      colorPalettes: {},
+      // Seed palettes from any configured `palette` arrays. PartMesh may
+      // overwrite these with extracted vertex-color palettes once the
+      // geometry loads (FBX/GLB with painted accents).
+      colorPalettes,
       globalTextColor: null,
     })
   },
