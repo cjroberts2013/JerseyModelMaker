@@ -12,12 +12,19 @@ import { renderJerseyThumb } from '../lib/thumbRenderer.js'
  * The team's `defaultStyle` selects which jersey-shape STL is used; this is
  * what makes the gallery showcase the available styles across the cards.
  */
-const TEMPLATE = data.templates[0]
-const BASE_PARTS = TEMPLATE.parts
-const STYLES = TEMPLATE.jerseyStyles || []
+const DEFAULT_TEMPLATE_ID = data.templates[0]?.id
 
-function pickStyleParts(defaultStyle) {
-  const style = STYLES.find((s) => s.id === defaultStyle) || STYLES[0]
+function getTemplate(templateId) {
+  return (
+    data.templates.find((t) => t.id === templateId) ||
+    data.templates.find((t) => t.id === DEFAULT_TEMPLATE_ID) ||
+    data.templates[0]
+  )
+}
+
+function pickStyleParts(template, defaultStyle) {
+  const styles = template.jerseyStyles || []
+  const style = styles.find((s) => s.id === defaultStyle) || styles[0]
   return style?.parts || []
 }
 
@@ -26,6 +33,7 @@ export default function JerseyThumb3D({
   textOverrides = {},
   fontCatalog,
   defaultStyle,
+  templateId,
 }) {
   const [src, setSrc] = useState(null)
 
@@ -33,8 +41,9 @@ export default function JerseyThumb3D({
     if (!fontCatalog) return
     let cancelled = false
 
-    const textZones = TEMPLATE.textZones.map((z) => ({ ...z, ...(textOverrides[z.id] || {}) }))
-    const parts = [...BASE_PARTS, ...pickStyleParts(defaultStyle)]
+    const template = getTemplate(templateId)
+    const textZones = template.textZones.map((z) => ({ ...z, ...(textOverrides[z.id] || {}) }))
+    const parts = [...template.parts, ...pickStyleParts(template, defaultStyle)]
 
     renderJerseyThumb(parts, colorOverrides, textZones, fontCatalog)
       .then((url) => {
@@ -47,7 +56,7 @@ export default function JerseyThumb3D({
       cancelled = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(colorOverrides), JSON.stringify(textOverrides), defaultStyle, !!fontCatalog])
+  }, [JSON.stringify(colorOverrides), JSON.stringify(textOverrides), defaultStyle, templateId, !!fontCatalog])
 
   return (
     <div className="w-full h-full flex items-center justify-center">

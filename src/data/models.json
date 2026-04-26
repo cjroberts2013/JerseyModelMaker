@@ -44,84 +44,42 @@
           "id": "classic",
           "name": "Classic",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/nfl-jersey-base/jersey.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/nfl-jersey-base/jersey.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         },
         {
           "id": "style1",
           "name": "Style 1",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_1.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_1.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         },
         {
           "id": "style2",
           "name": "Style 2",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_2.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_2.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         },
         {
           "id": "style3",
           "name": "Style 3",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_3.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_3.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         },
         {
           "id": "style4",
           "name": "Style 4",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_4.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_4.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         },
         {
           "id": "style5",
           "name": "Style 5",
           "parts": [
-            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_5.stl", "defaultColor": "#1e40af", "splitColors": true, "accentColor": "#a5acaf", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl",
-              "palette": [
-                { "name": "Body", "defaultColor": "#1e40af" },
-                { "name": "Sleeve Stripes", "defaultColor": "#a5acaf" },
-                { "name": "Collar", "defaultColor": "#a5acaf" },
-                { "name": "Trim", "defaultColor": "#ffffff" }
-              ]
-            }
+            { "id": "jersey", "name": "Jersey", "file": "/models/jersey-styles/jersey_model_5.stl", "defaultColor": "#1e40af", "exportGroup": "withText", "exportFilename": "JERSSEY_with_text_{playerName}_{playerNumber}.stl" }
           ]
         }
       ],
@@ -201,6 +159,132 @@
             "point2": [-10.5, -61.5, -2.6],
             "point3": [-10.5, -83.5, -2.6],
             "point4": [-55.5, -83.5, -2.6]
+          }
+        }
+      ]
+    },
+    {
+      "id": "mlb-jersey",
+      "parts": [
+        {
+          "id": "frame",
+          "name": "Outer Frame",
+          "file": "/models/mlb-jersey-base/frame.stl",
+          "defaultColor": "#0a0a0a",
+          "exportGroup": "withoutText",
+          "exportFilename": "black frame.stl"
+        },
+        {
+          "id": "matte",
+          "name": "Team Background",
+          "file": "/models/mlb-jersey-base/matte.stl",
+          "defaultColor": "#e8e8e8",
+          "exportGroup": "withText",
+          "exportFilename": "BG_with_text_{fullName}_{teamName}.stl",
+          "_comment": "MLB matte ships already centered at the world origin (cx≈0, cy≈2.5), so no position offset is needed. Front face sits at z=-3.6, back at z=-4.14."
+        },
+        {
+          "id": "background",
+          "name": "Inner Frame",
+          "file": "/models/mlb-jersey-base/background.stl",
+          "defaultColor": "#f5f5f5",
+          "exportGroup": "withoutText",
+          "exportFilename": "white frame.stl"
+        },
+        {
+          "id": "stand",
+          "name": "Stand",
+          "file": "/models/mlb-jersey-base/stand.stl",
+          "defaultColor": "#cccccc",
+          "exportGroup": "stl",
+          "exportFilename": "x 4.stl"
+        }
+      ],
+      "jerseyStyles": [
+        {
+          "id": "classic",
+          "name": "Classic",
+          "parts": [
+            { "id": "jersey", "name": "Jersey", "file": "/models/mlb-jersey-base/jersey.stl", "defaultColor": "#bf0d3e", "exportGroup": "withText", "exportFilename": "JERSEY_with_text_{playerName}_{playerNumber}.stl" }
+          ]
+        }
+      ],
+      "textZones": [
+        {
+          "id": "teamName",
+          "label": "TEAM NAME",
+          "defaultText": "TEAM\nNAME",
+          "defaultFont": "Arial Black",
+          "defaultSize": 13,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -0.4,
+          "defaultLineSpacing": -3.5,
+          "defaultAlign": "center",
+          "defaultColor": "#1a1a1a",
+          "defaultEmbed": 0.4,
+          "onPart": "matte",
+          "surface": {
+            "point1": [-50, 85.5, -3.6],
+            "point2": [50, 85.5, -3.6],
+            "point3": [50, 54.5, -3.6],
+            "point4": [-50, 54.5, -3.6]
+          }
+        },
+        {
+          "id": "playerName",
+          "label": "PLAYER NAME",
+          "defaultText": "NAME",
+          "defaultFont": "College",
+          "defaultSize": 12,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultAlign": "center",
+          "defaultColor": "#f5f5f5",
+          "defaultEmbed": 0.8,
+          "onPart": "jersey",
+          "surface": {
+            "point1": [-28, 40, 0],
+            "point2": [28, 40, 0],
+            "point3": [28, 30, 0],
+            "point4": [-28, 30, 0]
+          }
+        },
+        {
+          "id": "playerNumber",
+          "label": "PLAYER NUMBER",
+          "defaultText": "00",
+          "defaultFont": "College Bold",
+          "defaultSize": 48.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -1.1,
+          "defaultAlign": "center",
+          "defaultColor": "#a0a0a0",
+          "defaultEmbed": 0.8,
+          "onPart": "jersey",
+          "surface": {
+            "point1": [-36, 27, 0],
+            "point2": [36, 27, 0],
+            "point3": [36, -13, 0],
+            "point4": [-36, -13, 0]
+          }
+        },
+        {
+          "id": "fullName",
+          "label": "YOUR FULL NAME",
+          "defaultText": "Your\nName",
+          "defaultFont": "Arial Black",
+          "defaultSize": 9,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultAlign": "left",
+          "defaultColor": "#111111",
+          "defaultEmbed": 0.4,
+          "onPart": "matte",
+          "surface": {
+            "point1": [-55.5, -61.5, -3.6],
+            "point2": [-10.5, -61.5, -3.6],
+            "point3": [-10.5, -83.5, -3.6],
+            "point4": [-55.5, -83.5, -3.6]
           }
         }
       ]
@@ -375,6 +459,57 @@
       },
       "colorOverrides": {
         "jersey": "#203731"
+      }
+    },
+    {
+      "id": "yankees",
+      "name": "New York Yankees Jersey",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#0c2340", "accent": "#ffffff" },
+      "textOverrides": {
+        "teamName": { "defaultText": "NEW YORK\nYANKEES", "defaultColor": "#0c2340" },
+        "playerName": { "defaultText": "JUDGE", "defaultColor": "#0c2340" },
+        "playerNumber": { "defaultText": "99", "defaultColor": "#0c2340" }
+      },
+      "colorOverrides": {
+        "jersey": "#ffffff"
+      }
+    },
+    {
+      "id": "dodgers",
+      "name": "Los Angeles Dodgers Jersey",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#ffffff", "accent": "#005a9c" },
+      "textOverrides": {
+        "teamName": { "defaultText": "LOS ANGELES\nDODGERS", "defaultColor": "#005a9c" },
+        "playerName": { "defaultText": "OHTANI", "defaultColor": "#005a9c" },
+        "playerNumber": { "defaultText": "17", "defaultColor": "#005a9c" }
+      },
+      "colorOverrides": {
+        "jersey": "#ffffff"
+      }
+    },
+    {
+      "id": "redsox",
+      "name": "Boston Red Sox Jersey",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#ffffff", "accent": "#bd3039" },
+      "textOverrides": {
+        "teamName": { "defaultText": "BOSTON\nRED SOX", "defaultColor": "#bd3039" },
+        "playerName": { "defaultText": "DEVERS", "defaultColor": "#bd3039" },
+        "playerNumber": { "defaultText": "11", "defaultColor": "#bd3039" }
+      },
+      "colorOverrides": {
+        "jersey": "#ffffff"
       }
     }
   ]

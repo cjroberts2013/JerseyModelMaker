@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import data from '../data/models.json'
 import JerseyThumb3D from './JerseyThumb3D.jsx'
 import { assetUrl } from '../lib/assetUrl.js'
 
 export default function ModelGallery() {
   const navigate = useNavigate()
+  const { sport } = useParams()
   const [fontCatalog, setFontCatalog] = useState(null)
 
   useEffect(() => {
@@ -19,18 +20,46 @@ export default function ModelGallery() {
       .catch((err) => console.error('failed to load fonts.json for gallery', err))
   }, [])
 
+  const sportKey = sport ? sport.toUpperCase() : null
+  const filteredModels = useMemo(
+    () =>
+      sportKey
+        ? data.models.filter((m) => (m.category || '').toUpperCase() === sportKey)
+        : data.models,
+    [sportKey],
+  )
+
+  // Map each model to its template id (used by thumb renderer).
+  const templateById = useMemo(() => {
+    const map = new Map()
+    for (const m of data.models) map.set(m.id, m.template)
+    return map
+  }, [])
+
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-2xl font-bold text-white">ModelMaker</h1>
-          <p className="text-slate-400 text-sm mt-1">
-            Pick a template to customize and 3D print.
-          </p>
+        <header className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white">ModelMaker</h1>
+            <p className="text-slate-400 text-sm mt-1">
+              {sportKey
+                ? `${sportKey} jerseys — pick one to customize and 3D print.`
+                : 'Pick a template to customize and 3D print.'}
+            </p>
+          </div>
+          {sportKey && (
+            <button
+              onClick={() => navigate('/')}
+              className="text-xs uppercase text-slate-400 hover:text-white border border-slate-700 rounded px-3 py-1.5"
+            >
+              ← Change sport
+            </button>
+          )}
         </header>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {data.models.map((m) => (
+          {filteredModels.map((m) => (
             <button
               key={m.id}
               onClick={() => navigate(`/editor/${m.id}`)}
@@ -44,6 +73,7 @@ export default function ModelGallery() {
                   colorOverrides={m.colorOverrides || {}}
                   textOverrides={m.textOverrides || {}}
                   defaultStyle={m.defaultStyle}
+                  templateId={templateById.get(m.id)}
                   fontCatalog={fontCatalog}
                 />
               </div>
@@ -60,6 +90,12 @@ export default function ModelGallery() {
             </button>
           ))}
         </div>
+
+        {filteredModels.length === 0 && (
+          <div className="text-center text-slate-400 py-16">
+            No jerseys available for {sportKey} yet.
+          </div>
+        )}
       </div>
     </div>
   )
