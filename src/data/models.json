@@ -181,7 +181,8 @@
           "defaultColor": "#e8e8e8",
           "exportGroup": "withText",
           "exportFilename": "BG_with_text_{fullName}_{teamName}.stl",
-          "_comment": "MLB matte ships already centered at the world origin (cx≈0, cy≈2.5), so no position offset is needed. Front face sits at z=-3.6, back at z=-4.14."
+          "_comment": "MLB matte (baseball_bg.stl) ships with origin-at-corner: 0..115.72 × 0..177.57 × 0..2. Position centers it on X, shifts Y so center≈2.5 (matches the inner frame), and offsets Z so the front face lands at z=-3.6 (back at z=-5.6) — preserving the textZone surface Z used for engraving.",
+          "position": [-57.86, -86.29, -5.6]
         },
         {
           "id": "background",
@@ -510,6 +511,192 @@
       },
       "colorOverrides": {
         "jersey": "#ffffff"
+      }
+    },
+    {
+      "id": "brazoswood-brewers",
+      "name": "Brenklee's Team",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#c4a142", "accent": "#111111" },
+      "textOverrides": {
+        "teamName": {
+          "defaultText": "BRAZOSWOOD\nBREWERS",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "center",
+          "defaultSize": 11,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -0.4,
+          "defaultLineSpacing": -3.5,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 1
+        },
+        "playerName": {
+          "defaultText": "THOMPSON",
+          "defaultColor": "#111111",
+          "defaultFont": "College",
+          "defaultAlign": "center",
+          "defaultSize": 11.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "playerNumber": {
+          "defaultText": "2",
+          "defaultColor": "#111111",
+          "defaultFont": "College Bold",
+          "defaultAlign": "center",
+          "defaultSize": 48.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -1.1,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "fullName": {
+          "defaultText": "Brenklee\nThompson",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "left",
+          "defaultSize": 9,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 4,
+          "defaultOffsetY": -3
+        }
+      },
+      "colorOverrides": {
+        "jersey": "#c4a142"
+      }
+    },
+    {
+      "id": "brazoswood-cougars",
+      "name": "Greyson's Team",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#c8202c", "accent": "#111111" },
+      "textOverrides": {
+        "teamName": {
+          "defaultText": "BRAZOSWOOD\nCOUGARS",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "center",
+          "defaultSize": 11,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -0.4,
+          "defaultLineSpacing": -3.5,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 1
+        },
+        "playerName": {
+          "defaultText": "THOMPSON",
+          "defaultColor": "#111111",
+          "defaultFont": "College",
+          "defaultAlign": "center",
+          "defaultSize": 11.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "playerNumber": {
+          "defaultText": "8",
+          "defaultColor": "#111111",
+          "defaultFont": "College Bold",
+          "defaultAlign": "center",
+          "defaultSize": 48.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -1.1,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "fullName": {
+          "defaultText": "Greyson\nThompson",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "left",
+          "defaultSize": 9,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 4,
+          "defaultOffsetY": -3
+        }
+      },
+      "colorOverrides": {
+        "jersey": "#c8202c"
+      }
+    },
+    {
+      "id": "brazoswood-rays",
+      "name": "Zayne's Team",
+      "template": "mlb-jersey",
+      "category": "MLB",
+      "subtitle": "Custom 3D printed design",
+      "defaultStyle": "classic",
+      "thumb": { "jersey": "#1a2c8a", "accent": "#111111" },
+      "textOverrides": {
+        "teamName": {
+          "defaultText": "BRAZOSWOOD\nRAYS",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "center",
+          "defaultSize": 11,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -0.4,
+          "defaultLineSpacing": -3.5,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 1
+        },
+        "playerName": {
+          "defaultText": "THOMPSON",
+          "defaultColor": "#111111",
+          "defaultFont": "College",
+          "defaultAlign": "center",
+          "defaultSize": 11.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "playerNumber": {
+          "defaultText": "7",
+          "defaultColor": "#111111",
+          "defaultFont": "College Bold",
+          "defaultAlign": "center",
+          "defaultSize": 48.5,
+          "defaultDepth": 2.5,
+          "defaultSpacing": -1.1,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 0,
+          "defaultOffsetY": 0
+        },
+        "fullName": {
+          "defaultText": "Zayne\nThompson",
+          "defaultColor": "#111111",
+          "defaultFont": "Arial Black",
+          "defaultAlign": "left",
+          "defaultSize": 9,
+          "defaultDepth": 2.5,
+          "defaultSpacing": 0,
+          "defaultLineSpacing": 0,
+          "defaultOffsetX": 4,
+          "defaultOffsetY": -3
+        }
+      },
+      "colorOverrides": {
+        "jersey": "#1a2c8a"
       }
     }
   ]
